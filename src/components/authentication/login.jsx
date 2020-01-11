@@ -6,8 +6,8 @@ import './authentication.scss';
 const LoginComponent = ({handleChange, isLoading, handleSubmit}) => {
   return (
     <>
-      <div className="login-form">
-        <h2 className="login-form__title">Login</h2>
+      <div className="authentication-container">
+        <h2 className="authentication-container__title">Login</h2>
         <Form>
           <Form.Group controlId="phoneNumber">
             <Form.Control type="text" placeholder="phone number" name="phone_number" onChange={handleChange}/>
@@ -22,11 +22,11 @@ const LoginComponent = ({handleChange, isLoading, handleSubmit}) => {
             </Button>
           }
           {
-            isLoading && <div className="login-form__spinner">
+            isLoading && <div className="authentication-container__spinner">
               <Spinner animation="grow" />
             </div> 
           }
-          <p className="login-form__link">Don't have an account?<a href="/signup">Sign Up</a></p>
+          <p className="authentication-container__link">Don't have an account?<a href="/signup">Sign Up</a></p>
         </Form>
       </div>
     </>

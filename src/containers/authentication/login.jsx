@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import LoginComponent from '../../components/authentication/login';
 import publicPostData from '../../redux/middlewares';
-import loginAction from '../../redux/actions/authentication';
+import { loginAction } from '../../redux/actions/authentication';
 
 
 export class Login extends Component {
@@ -34,17 +36,14 @@ export class Login extends Component {
     const response = await publicPostData('/login/', loginAction, 'post', data);
     // eslint-disable-next-line no-unused-expressions
     response && response.error && (
-      this.setState({
-        errorMessage: response.error,
-        error: true
-      }),
+      toast.dismiss(),
+      toast.error('Login failed, please try again', { autoClose: false, hideProgressBar: true }),
       this.toggleState('isLoading', this.state.isLoading)
     );
     // eslint-disable-next-line no-unused-expressions
     response && response.data && (
-      this.setState({
-        error: false
-      }),
+      toast.dismiss(),
+      toast.success('Login successful', { autoClose: 3500, hideProgressBar: false }),
       this.toggleState('isLoading', this.state.isLoading),
       this.props.history.push('/#') // to add dashboard route
     );
@@ -63,8 +62,8 @@ export class Login extends Component {
 
 const mapStateToProps = state => {
   return {
-    error: state.authReducer.error,
-    payload: state.authReducer.payload,
+    error: state.loginReducer.error,
+    payload: state.loginReducer.payload,
   };
 };
 
