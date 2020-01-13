@@ -1,9 +1,11 @@
 import * as types from './types';
 
-const loginAction = (payload) => ({
+export const loginAction = (payload) => ({
   type: types.LOGIN_USER,
   payload
 });
 
-export default loginAction;
-
+export const signUpAction = (payload) => ({
+  type: types.SIGN_UP_SUCCESS,
+  payload
+});
