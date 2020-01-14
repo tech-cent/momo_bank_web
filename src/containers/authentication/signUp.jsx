@@ -6,9 +6,11 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import 'react-toastify/dist/ReactToastify.css';
 import "react-datepicker/dist/react-datepicker.css";
-import publicPostData from '../../redux/middlewares';
+import { publicPostData } from '../../redux/middlewares';
 import SignUpForm from '../../components/authentication/signUp';
 import { signUpAction } from '../../redux/actions/authentication';
+import NavigationBar from '../../components/navigationBar/NavigationBar';
+import Footer from '../../components/footer/Footer';
 
 
 export class SignUp extends Component {
@@ -74,19 +76,23 @@ export class SignUp extends Component {
   render() {
     const { firstName, lastName, phoneNumber, dateOfBirth, nin, password, confirm_password, isLoading, } = this.state;
     return (
-      <SignUpForm
-        handleChange={this.handleChange}
-        handleChangeDate={this.handleChangeDate}
-        handleSubmit={this.handleSubmit}
-        firstName={firstName}
-        lastName={lastName}
-        phoneNumber={phoneNumber}
-        dateOfBirth={dateOfBirth}
-        nin={nin}
-        password={password}
-        confirm_password={confirm_password}
-        isLoading={isLoading}
-      />
+      <>
+        <NavigationBar/>
+        <SignUpForm
+          handleChange={this.handleChange}
+          handleChangeDate={this.handleChangeDate}
+          handleSubmit={this.handleSubmit}
+          firstName={firstName}
+          lastName={lastName}
+          phoneNumber={phoneNumber}
+          dateOfBirth={dateOfBirth}
+          nin={nin}
+          password={password}
+          confirm_password={confirm_password}
+          isLoading={isLoading}
+        />
+        <Footer/>
+      </>
     )
   }
 }

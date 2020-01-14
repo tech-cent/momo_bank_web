@@ -2,21 +2,9 @@ import axios from 'axios';
 import errorOccured  from '../actions/error';
 
 
-const token = localStorage.getItem('token');
-const timeout = 60000;
-const baseURL = 'https://momobank.herokuapp.com/';
-const headers = token
-  ? {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${token}`,
-  } : {
-    'Content-Type': 'application/json',
-  };
-
 const axiosInstance = axios.create({
-  baseURL,
-  timeout,
-  headers,
+  baseURL: 'https://momobank.herokuapp.com/',
+  timeout: 60000
 });
 
 
@@ -36,7 +24,10 @@ const publicPostData = (path, actionCreator, method, data) => (dispatch) => {
     });
 };
 
-export const privatePostData = (path, actionCreator, method, data,) => (dispatch) => {
+const privatePostData = (path, actionCreator, method, data,) => (dispatch) => {
+  const token = localStorage.getItem('token');
+
+  axiosInstance.defaults.headers.common.Authorization = 'Bearer '.concat(token);
   return axiosInstance[method](path, data)
   .then((response) => {
     dispatch(actionCreator(response.data));
@@ -51,5 +42,20 @@ export const privatePostData = (path, actionCreator, method, data,) => (dispatch
   });
 };
 
-export default publicPostData;
+const privateDataFetch = (endpoint, actionCreator) => (dispatch) => {
+  const token = localStorage.getItem('token');
+
+  axiosInstance.defaults.headers.common.Authorization = 'Bearer '.concat(token);
+  return axiosInstance.get(endpoint).then((response) => {
+    dispatch(actionCreator(response.data));
+  }).catch((err) => {
+    dispatch(errorOccured(err));
+  });
+};
+
+export {
+  publicPostData,
+  privatePostData,
+  privateDataFetch
+};
 
