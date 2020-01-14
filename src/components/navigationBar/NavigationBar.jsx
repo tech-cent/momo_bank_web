@@ -4,7 +4,15 @@ import './NavigationBar.scss';
 import img from '../../assets/images/mtn_logo.gif';
 
 class NavigationBar extends Component {
+
+  handleClick = (e) => {
+    e.preventDefault();
+    localStorage.removeItem('token');
+    window.location.replace('/')
+  }
+
   render() {
+    const { isAuthenticated } = this.props
     const appNavbar = (
       <Navbar fixed="top" bg="light" variant="light">
         <Container>
@@ -15,8 +23,24 @@ class NavigationBar extends Component {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
-              <Nav.Link href="/login">Login</Nav.Link>
-              <Nav.Link href="/signup">SignUp</Nav.Link>
+              {
+                !isAuthenticated && (
+                  <>
+                    <Nav.Link href="/login">Login</Nav.Link>
+                    <Nav.Link href="/signup">SignUp</Nav.Link>
+                  </>
+                )
+              }
+              {
+                isAuthenticated && (
+                  <>
+                    <Nav.Link href="/">Home</Nav.Link>
+                    <Nav.Link href="/dashboard">My Accounts</Nav.Link>
+                    <Nav.Link href="/dashboard">Transactions</Nav.Link>
+                    <Nav.Link href="#"><button className="logout-btn" onClick={this.handleClick}>Logout</button></Nav.Link>
+                  </>
+                )
+              }
             </Nav>
           </Navbar.Collapse>
         </Container>

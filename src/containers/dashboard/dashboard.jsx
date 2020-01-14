@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PropTypes from 'prop-types';
-import { privatePostData } from '../../redux/middlewares';
-import DashboardPage from '../../components/dashboard/dashboardPage';
+import { privatePostData, privateDataFetch } from '../../redux/middlewares';
 import { makeTransactionAction } from '../../redux/actions/transactions';
+
+import DashboardComponent from '../../components/dashboard/dashboard';
+import NavigationBar from '../../components/navigationBar/NavigationBar';
+import Footer from '../../components/footer/Footer';
+import fetchAccountsAction from '../../redux/actions/accounts';
 
 
 export class Dashboard extends Component {
@@ -16,7 +19,23 @@ export class Dashboard extends Component {
       account: '52',
       type: '',
       amount: '',
+      isLoading: false
     };
+  }
+
+  componentDidMount () {
+    this.getAccountsData();
+  }
+
+  toggleState = (name, value) => {
+    this.setState({ [name]: !value });
+  }
+
+  getAccountsData = async () => {
+    this.toggleState('isLoading', this.state.isLoading);
+    const { privateDataFetch } = this.props;
+    await privateDataFetch('/account/', fetchAccountsAction);
+    this.toggleState('isLoading', this.state.isLoading);
   }
 
   handleChange = event => {
@@ -42,28 +61,41 @@ export class Dashboard extends Component {
   }
 
   render() {
-    const { type } = this.state;
+    const { type, isLoading } = this.state;
+    const { accounts } = this.props;
     return (
-      <DashboardPage
-        handleChange={this.handleChange}
-        handleSubmit={this.handleSubmit}
-        type={type}
-      />
-    )
-  }
-}
+      <>
+        <NavigationBar isAuthenticated/>
+        <DashboardComponent 
+          accounts={accounts}
+          isLoading={isLoading}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+          type={type}
+          />
+        <Footer />
+      </>
+    );
+  };
+};
 
-const matchDispatchToProps = (dispatch) => bindActionCreators({makeTransactionAction, privatePostData}, dispatch);
+const actionCreators = {
+  privatePostData,
+  privateDataFetch
+} 
 
 const mapStateToProps = state => {
   return {
     transactionSuccess: state.transactionsReducer.transactionSuccess,
+    accounts: state.fetchAccountsReducer.payload,
+    user: state.loginReducer.payload,
   };
 };
 
 Dashboard.propTypes = {
   transactionSuccess: PropTypes.object,
-  makeTransactionAction: PropTypes.func.isRequired,
+  privateDataFetch: PropTypes.func,
+  makeTransactionAction: PropTypes.func,
   privatePostData: PropTypes.func.isRequired,
 };
 
@@ -73,5 +105,6 @@ Dashboard.defaultProps = {
 
 export default connect(
   mapStateToProps,
-  matchDispatchToProps,
+  actionCreators,
 )(Dashboard);
+
