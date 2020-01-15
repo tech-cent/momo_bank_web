@@ -6,8 +6,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import LoginComponent from '../../components/authentication/login';
 import {publicPostData} from '../../redux/middlewares';
 import { loginAction } from '../../redux/actions/authentication';
-import NavigationBar from '../../components/navigationBar/NavigationBar';
-import Footer from '../../components/footer/Footer';
 
 
 export class Login extends Component {
@@ -49,8 +47,8 @@ export class Login extends Component {
       localStorage.setItem('username', response.data.name),
       toast.success('Login successful', { autoClose: 3500, hideProgressBar: false }),
       this.toggleState('isLoading', this.state.isLoading),
-      localStorage.setItem('token', response.data.access),
-      this.props.history.push('/dashboard')
+      // this.props.history.push('/dashboard')
+      window.location.href = "/dashboard"
     );
   }
 
@@ -58,9 +56,7 @@ export class Login extends Component {
     const { isLoading } = this.state;
     return (
       <>
-        <NavigationBar />
         <LoginComponent handleChange={this.handleChange} handleSubmit={this.handleSubmit} isLoading={isLoading}/>
-        <Footer />
       </>
     )
   }

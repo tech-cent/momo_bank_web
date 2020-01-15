@@ -1,24 +1,27 @@
-import {
-  MAKE_TRANSACTION_SUCCESS,
-  MAKE_TRANSACTION_ERROR,
-} from '../actions/types';
+import * as types from '../actions/types';
 
 const initialSate = {
-  transactionSuccess: {},
+  makeTransactionSuccess: {},
   transactionError: false,
+  fetchTransaction: {},
 };
 
 const transactionsReducer = (state = initialSate, action) => {
   switch (action.type) {
-    case MAKE_TRANSACTION_SUCCESS:
+    case types.MAKE_TRANSACTION_SUCCESS:
       return {
         ...state,
-        transactionSuccess: action.payload,
+        makeTransactionSuccess: action.payload,
       };
-    case MAKE_TRANSACTION_ERROR:
+    case types.MAKE_TRANSACTION_ERROR:
       return {
         ...state,
         transactionError: action.payload,
+      };
+    case types.FETCH_TRANSACTION:
+      return {
+        ...state,
+        fetchTransaction: action.payload,
       };
     default:
       return state;

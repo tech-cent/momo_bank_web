@@ -5,18 +5,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import PropTypes from 'prop-types';
 import { privatePostData, privateDataFetch } from '../../redux/middlewares';
 import { makeTransactionAction } from '../../redux/actions/transactions';
-
-import DashboardComponent from '../../components/dashboard/dashboard';
-import NavigationBar from '../../components/navigationBar/NavigationBar';
-import Footer from '../../components/footer/Footer';
+import DashboardComponent from '../../components/dashboard';
 import fetchAccountsAction from '../../redux/actions/accounts';
+import { fetchTransactionAction } from '../../redux/actions/transactions';
 
 
 export class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      account: '52',
+      account: '',
       type: '',
       amount: '',
       isLoading: false
@@ -27,8 +25,20 @@ export class Dashboard extends Component {
     this.getAccountsData();
   }
 
+  componentDidUpdate (nextProps) {
+    const { accounts } = nextProps;
+    if (accounts && accounts.length) {
+      this.getTransactionsData(accounts[0].id);
+    }
+  }
+
   toggleState = (name, value) => {
     this.setState({ [name]: !value });
+  }
+
+  getTransactionsData = async (accountId) => {
+    const { privateDataFetch } = this.props;
+    await privateDataFetch(`/account/${accountId}/transactions/`, fetchTransactionAction);
   }
 
   getAccountsData = async () => {
@@ -62,19 +72,16 @@ export class Dashboard extends Component {
 
   render() {
     const { type, isLoading } = this.state;
-    const { accounts } = this.props;
+    const { accounts, transactions } = this.props;
     return (
-      <>
-        <NavigationBar isAuthenticated/>
-        <DashboardComponent 
-          accounts={accounts}
-          isLoading={isLoading}
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit}
-          type={type}
-          />
-        <Footer />
-      </>
+      <DashboardComponent
+        accounts={accounts}
+        isLoading={isLoading}
+        handleChange={this.handleChange}
+        handleSubmit={this.handleSubmit}
+        type={type}
+        transactions={transactions}
+      />
     );
   };
 };
@@ -86,21 +93,24 @@ const actionCreators = {
 
 const mapStateToProps = state => {
   return {
-    transactionSuccess: state.transactionsReducer.transactionSuccess,
+    makeTransactionSuccess: state.transactionsReducer.makeTransactionSuccess,
     accounts: state.fetchAccountsReducer.payload,
     user: state.loginReducer.payload,
+    transactions: state.transactionsReducer.fetchTransaction,
   };
 };
 
 Dashboard.propTypes = {
-  transactionSuccess: PropTypes.object,
+  makeTransactionSuccess: PropTypes.object,
+  transaction: PropTypes.object,
   privateDataFetch: PropTypes.func,
   makeTransactionAction: PropTypes.func,
   privatePostData: PropTypes.func.isRequired,
 };
 
 Dashboard.defaultProps = {
-  transactionSuccess: {},
+  makeTransactionSuccess: {},
+  transaction: {},
 };
 
 export default connect(
