@@ -6,6 +6,10 @@
 
 #### [Deployed App here](https://momobankweb.herokuapp.com/)
 
+#### Repos for application
+- API - https://github.com/tech-cent/momo_bank_api
+- Android - https://github.com/tech-cent/momo_bank_android
+
 ## How To Install And Run The Application
 
 ### Prerequisites
