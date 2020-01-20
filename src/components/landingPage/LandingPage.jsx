@@ -11,10 +11,10 @@ const LandingPage = () => {
         <div className="col-md-5 landing-page-details">
           <h1>MTN momo Bank</h1>
           <p className="paragraph-text">
-            The mobile money - bank integration solution <br />
-            Make transfers from mobile money to your bank account as often as you wish.
+            A digital bank powered by MoMo Pay, bringing convinent banking to your fingertips <br/>
+            Make transfers between mobile money and your bank account as often as you wish.
             Once the money is transfered, you are able to make investments to earn profits<br/><br/>
-            Take up investment opportunities such as fixed deposit accounts with great interest rates <br/><br/><br/>
+            Take up investment opportunities such as fixed deposit accounts with great interest rates <br/><br/>
           </p>
           <h5>Join us today</h5>
           <a href="https://play.google.com" rel="noopener noreferrer" target="_blank">
