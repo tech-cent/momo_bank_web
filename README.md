@@ -4,6 +4,8 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/8b8e72ef924da97ede28/maintainability)](https://codeclimate.com/github/tech-cent/momo_bank_web/maintainability)
 <!-- [![Test Coverage](https://api.codeclimate.com/v1/badges/8b8e72ef924da97ede28/test_coverage)](https://codeclimate.com/github/tech-cent/momo_bank_web/test_coverage) -->
 
+MoMo Bank - A digital bank powered by MoMo Pay, bringing convinent banking to your fingertips.
+
 #### [Deployed App here](https://momobankweb.herokuapp.com/)
 
 #### Repos for application
