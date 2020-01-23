@@ -34,7 +34,7 @@ class NavigationBar extends Component {
                   <Nav.Link href="/">Home</Nav.Link>
                   <Nav.Link href="/dashboard">My Accounts</Nav.Link>
                   <Nav.Link href="/dashboard">Transactions</Nav.Link>
-                  <Nav.Link href="#"><button className="logout-btn" onClick={this.handleClick}>Logout</button></Nav.Link>
+                  <Nav.Link href="#" className="logout-btn" onClick={this.handleClick}>Logout</Nav.Link>
                 </>
               )}
             </Nav>
