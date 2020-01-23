@@ -15,7 +15,7 @@ class NavigationBar extends Component {
   render() {
     const token = localStorage.getItem('token');
     const appNavbar = (
-      <Navbar fixed="top" bg="light" variant="light">
+      <Navbar  collapseOnSelect expand="lg" fixed="top" bg="light" variant="light">
         <Container>
           <Navbar.Brand expand="lg" href="/">
             <img width="45px" src={img} alt="MTN" scale="0" />

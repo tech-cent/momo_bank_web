@@ -13,3 +13,16 @@
   }
   
 }
+
+@media only screen and (max-width: 960px) {
+  .landing-page-details {
+    & > h1 {
+      font-size: 35px;
+    }
+
+    & > .momo-bank-theme-image {
+      width: 90%;
+      margin-top: 10%;
+    }
+  }
+}
