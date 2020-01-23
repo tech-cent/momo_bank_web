@@ -9,7 +9,7 @@ const Dashboard = props => {
   return (
     <Container>
       <Row className="dasboard-container">
-        <Col md={3} className="dasboard-container__card1">
+        <Col  sm className="dasboard-container__card1">
           <AccountsCard 
             accounts={accounts}
             isLoading={isLoading}
@@ -18,7 +18,7 @@ const Dashboard = props => {
             type={type}
           />
         </Col>
-        <Col md={{ span: 8, offset: 1 }} className="dasboard-container__card2">
+        <Col md={{ span: 8, offset: 1 }} sm className="dasboard-container__card2">
           <TransactionsCard
             handleChange={handleChange}
             handleSubmit={handleSubmit}
