@@ -9,7 +9,7 @@ const Dashboard = props => {
   return (
     <Container>
       <Row className="dasboard-container">
-        <Col  sm className="dasboard-container__card1">
+        <Col sm className="dasboard-container__card1">
           <AccountsCard 
             accounts={accounts}
             isLoading={isLoading}
